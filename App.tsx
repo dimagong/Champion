@@ -2,9 +2,29 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import {HomeScreen} from './src/screens/HomeScreen';
 import {StatsScreen} from './src/screens/StatsScreen';
-import {Button, Image, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {TeamScreen} from './src/screens/TeamScreen';
+
+import {
+  Button,
+  Image,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+interface Navigation {
+  navigate(destination: string): void;
+}
 
 const Stack = createNativeStackNavigator();
 
@@ -19,20 +39,25 @@ const LogoTitle = () => {
   );
 };
 
-const HeaderRightIcon = () => (
-  <Button
-    // onPress={() => alert('This is a button!')}
-    title="Info"
-    color="#fff"
-  />
+const HeaderRightIcon = ({navigation}: {navigation: Navigation}) => (
+  <TouchableOpacity onPress={() => navigation.navigate('Team')}>
+    <View>
+      <MaterialCommunityIcon
+        name="soccer-field"
+        size={35}
+        style={{transform: [{rotate: '90deg'}]}}
+        color="white"
+      />
+    </View>
+  </TouchableOpacity>
 );
 
-const HeaderLeftIcon = () => (
-  <Button
-    // onPress={() => alert('This is a button!')}
-    title="Info"
-    color="#fff"
-  />
+const HeaderLeftIcon = ({navigation}: {navigation: Navigation}) => (
+  <TouchableOpacity onPress={() => navigation.navigate('Stats')}>
+    <View>
+      <MaterialIcon name="calendar-today" size={25} color="white" />
+    </View>
+  </TouchableOpacity>
 );
 
 const App: () => ReactNode = () => {
@@ -47,19 +72,30 @@ const App: () => ReactNode = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
-            headerRight: props => <HeaderRightIcon />,
-            headerLeft: props => <HeaderLeftIcon />,
+          options={({navigation}: {navigation: Navigation}) => ({
+            headerRight: props => <HeaderRightIcon navigation={navigation} />,
+            headerLeft: props => <HeaderLeftIcon navigation={navigation} />,
             headerStyle: {
               backgroundColor: '#212121',
             },
-          }}
+          })}
         />
         <Stack.Screen
           name="Stats"
           component={StatsScreen}
           options={{
             title: 'Stats',
+            headerStyle: {
+              backgroundColor: '#212121',
+            },
+            headerTintColor: '#ffffff',
+          }}
+        />
+        <Stack.Screen
+          name="Team"
+          component={TeamScreen}
+          options={{
+            title: 'Team',
             headerStyle: {
               backgroundColor: '#212121',
             },
@@ -79,6 +115,14 @@ const styles = StyleSheet.create({
   bottomSafeArea: {
     flex: 1,
     backgroundColor: 'red',
+  },
+  leftIcon: {
+    width: 25,
+    height: 25,
+    fill: 'red',
+    // color: 'white',
+    backgroundColor: 'white',
+    // filter: `sepia(100%)`,
   },
 });
 
