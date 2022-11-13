@@ -1,4 +1,8 @@
 import * as React from 'react';
+
+import {useSelector, useDispatch} from 'react-redux';
+import {changeResultMatch} from './../../store/slices';
+
 import {
   Button,
   View,
@@ -27,9 +31,15 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {CardComponent} from 'ui/components/CardComponent';
 import {HeaderComponent} from 'ui/components/HeaderComponent';
 
+import type {RootState} from '../../store/store';
+
 const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
+  const count = useSelector((state: RootState) => state?.resultMatch?.value);
+  console.log('count', count);
+  const dispatch = useDispatch();
+
   const goStatsPage = () => navigation.navigate('Stats');
   return (
     <SafeAreaView style={styles.container}>

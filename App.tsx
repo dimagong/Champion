@@ -3,6 +3,9 @@ import type {ReactNode} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {store} from './src/store/store';
+import {Provider} from 'react-redux';
+
 import {Provider as PaperProvider} from 'react-native-paper';
 
 import {HomeScreen} from './src/screens/HomeScreen';
@@ -64,50 +67,54 @@ const HeaderLeftIcon = ({navigation}: {navigation: Navigation}) => (
 
 const App: () => ReactNode = () => {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerTitle: props => <LogoTitle />,
-            headerTitleAlign: 'center',
-          }}>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={({navigation}: {navigation: Navigation}) => ({
-              headerRight: props => <HeaderRightIcon navigation={navigation} />,
-              headerLeft: props => <HeaderLeftIcon navigation={navigation} />,
-              headerStyle: {
-                backgroundColor: '#212121',
-              },
-            })}
-          />
-          <Stack.Screen
-            name="Stats"
-            component={StatsScreen}
-            options={{
-              title: 'Stats',
-              headerStyle: {
-                backgroundColor: '#212121',
-              },
-              headerTintColor: '#ffffff',
-            }}
-          />
-          <Stack.Screen
-            name="Team"
-            component={TeamScreen}
-            options={{
-              title: 'Team',
-              headerStyle: {
-                backgroundColor: '#212121',
-              },
-              headerTintColor: '#ffffff',
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              headerTitle: props => <LogoTitle />,
+              headerTitleAlign: 'center',
+            }}>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={({navigation}: {navigation: Navigation}) => ({
+                headerRight: props => (
+                  <HeaderRightIcon navigation={navigation} />
+                ),
+                headerLeft: props => <HeaderLeftIcon navigation={navigation} />,
+                headerStyle: {
+                  backgroundColor: '#212121',
+                },
+              })}
+            />
+            <Stack.Screen
+              name="Stats"
+              component={StatsScreen}
+              options={{
+                title: 'Stats',
+                headerStyle: {
+                  backgroundColor: '#212121',
+                },
+                headerTintColor: '#ffffff',
+              }}
+            />
+            <Stack.Screen
+              name="Team"
+              component={TeamScreen}
+              options={{
+                title: 'Team',
+                headerStyle: {
+                  backgroundColor: '#212121',
+                },
+                headerTintColor: '#ffffff',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </Provider>
   );
 };
 
