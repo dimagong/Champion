@@ -16,6 +16,7 @@
       // This needs to be mirrored in babel.config.js
       // Components is a directory with sub directories
       "assets/*": ["src/assets/*"],
+      "ui/*": ["src/ui/*"],
 
       // We want to expose the exports of the buttons index file
       "screens": ["src/screens/"]
