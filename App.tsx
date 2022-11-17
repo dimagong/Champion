@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {store} from './src/store/store';
-import {Provider} from 'react-redux';
+import {Provider as ReduxProvider} from 'react-redux';
 
 import {Provider as PaperProvider} from 'react-native-paper';
 
@@ -67,7 +67,7 @@ const HeaderLeftIcon = ({navigation}: {navigation: Navigation}) => (
 
 const App: () => ReactNode = () => {
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator
@@ -114,7 +114,7 @@ const App: () => ReactNode = () => {
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
-    </Provider>
+    </ReduxProvider>
   );
 };
 

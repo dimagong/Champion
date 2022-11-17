@@ -10,7 +10,7 @@ interface ScoreState {
 export const scoreSlice = createSlice({
   name: 'resultMatch',
   initialState: {
-    value: '0 - 0 ',
+    value: '0 - 0',
   },
   reducers: {
     changeResultMatch: (state, action) => {
@@ -19,9 +19,36 @@ export const scoreSlice = createSlice({
   },
 });
 
+export const nextMatchSlice = createSlice({
+  name: 'nextMatch',
+  initialState: {
+    value: '00.00.00',
+  },
+  reducers: {
+    setNextMatch: (state, action) => {
+      state.value = action.payload;
+    },
+  },
+});
+
+export const teamsSlice = createSlice({
+  name: 'teams',
+  initialState: {
+    value: [],
+  },
+  reducers: {
+    setTeamsResults: (state, action) => {
+      state.value = action.payload;
+    },
+  },
+});
+
 // Action creators are generated for each case reducer function
+
 export const {changeResultMatch} = scoreSlice.actions;
+export const {setNextMatch} = nextMatchSlice.actions;
+export const {setTeamsResults} = teamsSlice.actions;
 
-const scoreSliceReducer = scoreSlice.reducer;
-
-export default scoreSliceReducer;
+export const scoreReducer = scoreSlice.reducer;
+export const nextMatchReducer = nextMatchSlice.reducer;
+export const teamsReducer = teamsSlice.reducer;

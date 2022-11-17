@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
 
-import scoreSliceReducer from '../store/slices';
+import {scoreReducer, nextMatchReducer, teamsReducer} from '../store/slices';
 
 export const store = configureStore({
   reducer: {
-    resultMatch: scoreSliceReducer,
+    resultMatch: scoreReducer,
+    nextMatch: nextMatchReducer,
+    teams: teamsReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

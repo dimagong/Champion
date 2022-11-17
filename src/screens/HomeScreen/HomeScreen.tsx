@@ -1,7 +1,11 @@
 import * as React from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {changeResultMatch} from './../../store/slices';
+import {
+  changeResultMatch,
+  setNextMatch,
+  setTeamsResults,
+} from './../../store/slices';
 
 import {
   Button,
@@ -37,7 +41,8 @@ const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
   const count = useSelector((state: RootState) => state?.resultMatch?.value);
-  console.log('count', count);
+  const state = useSelector((state: RootState) => state);
+  console.log('state', state);
   const dispatch = useDispatch();
 
   const goStatsPage = () => navigation.navigate('Stats');
