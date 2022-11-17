@@ -31,24 +31,23 @@ export const nextMatchSlice = createSlice({
   },
 });
 
-export const teamsSlice = createSlice({
-  name: 'teams',
+export const statisticsSlice = createSlice({
+  name: 'statistics',
   initialState: {
     value: [],
   },
   reducers: {
-    setTeamsResults: (state, action) => {
+    setStatistics: (state, action) => {
       state.value = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-
 export const {changeResultMatch} = scoreSlice.actions;
 export const {setNextMatch} = nextMatchSlice.actions;
-export const {setTeamsResults} = teamsSlice.actions;
+export const {setStatistics} = statisticsSlice.actions;
 
 export const scoreReducer = scoreSlice.reducer;
 export const nextMatchReducer = nextMatchSlice.reducer;
-export const teamsReducer = teamsSlice.reducer;
+export const statisticsReducer = statisticsSlice.reducer;

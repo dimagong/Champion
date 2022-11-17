@@ -4,8 +4,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   changeResultMatch,
   setNextMatch,
-  setTeamsResults,
+  setStatistics,
 } from './../../store/slices';
+
+import {receiveStatistics} from './../../data/api/services';
 
 import {
   Button,
@@ -44,6 +46,12 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
   const state = useSelector((state: RootState) => state);
   console.log('state', state);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    const data = receiveStatistics();
+    // console.log(' React.useEffect data', data);
+    data.then(data => dispatch(setStatistics([...data])));
+  }, []);
 
   const goStatsPage = () => navigation.navigate('Stats');
   return (
