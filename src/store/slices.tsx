@@ -1,5 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+import {fetchStatistics} from './thunks/fetchStatistics';
+
 import type {RootState} from '../store/store';
 
 // Define a type for the slice state
@@ -37,16 +39,48 @@ export const statisticsSlice = createSlice({
     value: [],
   },
   reducers: {
-    setStatistics: (state, action) => {
-      state.value = action.payload;
-    },
+    // setStatistics: (state, action) => {
+    //   state.value = action.payload;
+    // },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchStatistics.pending, (state, action) => {
+        // if (state.loading === 'idle') {
+        //   state.loading = 'pending'
+        //   state.currentRequestId = action.meta.requestId
+        // }
+      })
+      .addCase(fetchStatistics.fulfilled, (state, action) => {
+        const {payload} = action;
+        state.value = payload;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.entities.push(action.payload)
+        //   state.currentRequestId = undefined
+        // }
+      })
+      .addCase(fetchStatistics.rejected, (state, action) => {
+        const {requestId} = action.meta;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.error = action.error
+        //   state.currentRequestId = undefined
+        // }
+      });
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {changeResultMatch} = scoreSlice.actions;
 export const {setNextMatch} = nextMatchSlice.actions;
-export const {setStatistics} = statisticsSlice.actions;
+//export const {setStatistics} = statisticsSlice.actions;
 
 export const scoreReducer = scoreSlice.reducer;
 export const nextMatchReducer = nextMatchSlice.reducer;

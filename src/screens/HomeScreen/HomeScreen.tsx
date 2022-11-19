@@ -4,10 +4,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   changeResultMatch,
   setNextMatch,
-  setStatistics,
+  //setStatistics,
 } from './../../store/slices';
 
 import {receiveStatistics} from './../../data/api/services';
+import {fetchStatistics} from '../../store/thunks/fetchStatistics';
 
 import {
   Button,
@@ -45,15 +46,15 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
   const count = useSelector((state: RootState) => state?.resultMatch?.value);
   const state = useSelector((state: RootState) => state);
   console.log('state', state);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   React.useEffect(() => {
-    const data = receiveStatistics();
-    // console.log(' React.useEffect data', data);
-    data.then(data => dispatch(setStatistics([...data])));
+    dispatch(fetchStatistics());
+    // const data = receiveStatistics();
+    // data.then(data => dispatch(setStatistics([...data])));
   }, []);
 
-  const goStatsPage = () => navigation.navigate('Stats');
+  const redirectStatsPage = () => navigation.navigate('Stats');
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
@@ -61,7 +62,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
         <HeaderComponent />
         <View style={styles.container__view}>
           <CardComponent
-            onClick={goStatsPage}
+            onClick={redirectStatsPage}
             contentTitle="The best players of the previous game"
             content="Junior players received the best marks"
           />
