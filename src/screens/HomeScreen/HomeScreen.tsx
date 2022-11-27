@@ -7,6 +7,8 @@ import {
   //setStatistics,
 } from './../../store/slices';
 
+import {selectNextMatch} from './../../store/selectors/selectors';
+
 import {receiveStatistics} from './../../data/api/services';
 import {fetchStatistics} from '../../store/thunks/fetchStatistics';
 import {fetchNextMatches} from '../../store/thunks/fetchNextMatches';
@@ -57,11 +59,13 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
   }, []);
 
   const redirectStatsPage = () => navigation.navigate('Stats');
+  const nextMatch = useSelector(selectNextMatch);
+  console.log('teams', nextMatch);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <ScrollView>
-        <HeaderComponent />
+        <HeaderComponent nextMatch={nextMatch} />
         <View style={styles.container__view}>
           <CardComponent
             onClick={redirectStatsPage}

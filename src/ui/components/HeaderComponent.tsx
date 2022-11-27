@@ -3,13 +3,11 @@ import * as React from 'react';
 import {Button, View, Text, Image, StyleSheet} from 'react-native';
 
 type HeaderComponentType = {
-  time?: any;
-  hostTeam?: string;
-  guestTeam?: string;
+  nextMatch?: any;
 };
 
-export const HeaderComponent: React.FC<HeaderComponentType> = props => {
-  const {time, hostTeam, guestTeam} = props;
+export const HeaderComponent: React.FC<HeaderComponentType> = ({nextMatch}) => {
+  const {meetingTime, teamHome, teamGuest} = nextMatch;
   return (
     <View style={styles.header}>
       <Image
@@ -19,16 +17,12 @@ export const HeaderComponent: React.FC<HeaderComponentType> = props => {
       <View style={styles.header__content}>
         <View style={styles.timer}>
           <Text style={styles.timer__title}>SOON:</Text>
-          <Text style={styles.timer__time}>{time ?? `10 : 20`}</Text>
+          <Text style={styles.timer__time}>{meetingTime}</Text>
         </View>
         <View style={styles.competition}>
-          <Text style={styles.competition__title}>
-            {hostTeam ?? `ISKRA HRBOLTOVÁ`}
-          </Text>
+          <Text style={styles.competition__title}>{teamHome}</Text>
           <Text style={styles.competition__vs}>VS</Text>
-          <Text style={styles.competition__title}>
-            {guestTeam ?? `MÁJ RUŽOMBEROK-ČERNOVÁ`}
-          </Text>
+          <Text style={styles.competition__title}>{teamGuest}</Text>
         </View>
       </View>
     </View>
@@ -80,7 +74,7 @@ const styles = StyleSheet.create({
   },
   timer__time: {
     color: 'red',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '900',
     textAlign: 'center',
   },
