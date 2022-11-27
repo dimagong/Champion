@@ -25,7 +25,7 @@ export const scoreSlice = createSlice({
 export const nextMatchesSlice = createSlice({
   name: 'nextmatches',
   initialState: {
-    nextmatches: [],
+    value: [],
   },
   reducers: {
     // setNextMatch: (state, action) => {
@@ -43,6 +43,8 @@ export const nextMatchesSlice = createSlice({
       })
       .addCase(fetchNextMatches.fulfilled, (state, action) => {
         const {payload} = action;
+        state.value = payload;
+
         //
         //state.value = payload;
         // if (
@@ -90,8 +92,9 @@ export const statisticsSlice = createSlice({
       })
       .addCase(fetchStatistics.fulfilled, (state, action) => {
         const {payload} = action;
+        state.value = payload;
         //
-        //state.value = payload;
+        //;
         // if (
         //   state.loading === 'pending' &&
         //   state.currentRequestId === requestId
