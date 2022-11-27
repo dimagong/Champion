@@ -2,14 +2,14 @@ import {configureStore} from '@reduxjs/toolkit';
 
 import {
   scoreReducer,
-  nextMatchReducer,
+  nextMatchesReducer,
   statisticsReducer,
 } from '../store/slices';
 
 export const store = configureStore({
   reducer: {
     resultMatch: scoreReducer,
-    nextMatch: nextMatchReducer,
+    nextMatches: nextMatchesReducer,
     statistics: statisticsReducer,
   },
 });

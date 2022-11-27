@@ -3,12 +3,13 @@ import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   changeResultMatch,
-  setNextMatch,
+  //setNextMatch,
   //setStatistics,
 } from './../../store/slices';
 
 import {receiveStatistics} from './../../data/api/services';
 import {fetchStatistics} from '../../store/thunks/fetchStatistics';
+import {fetchNextMatches} from '../../store/thunks/fetchNextMatches';
 
 import {
   Button,
@@ -50,6 +51,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
 
   React.useEffect(() => {
     dispatch(fetchStatistics());
+    dispatch(fetchNextMatches());
     // const data = receiveStatistics();
     // data.then(data => dispatch(setStatistics([...data])));
   }, []);
