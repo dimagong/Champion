@@ -23,6 +23,7 @@ type CardComponentType = {
   contentTitle?: string;
   content?: string;
   onClick?: () => any;
+  id?: string;
 };
 
 export const CardComponent: React.FC<CardComponentType> = props => {

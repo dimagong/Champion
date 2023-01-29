@@ -11,6 +11,7 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {HomeScreen} from './src/screens/HomeScreen';
 import {StatsScreen} from './src/screens/StatsScreen';
 import {TeamScreen} from './src/screens/TeamScreen';
+import {ArticlesScreen} from './src/screens/ArticlesScreen';
 
 import {
   Button,
@@ -65,6 +66,7 @@ const HeaderLeftIcon = ({navigation}: {navigation: Navigation}) => (
   </TouchableOpacity>
 );
 
+//ArticlesScreen
 const App: () => ReactNode = () => {
   return (
     <ReduxProvider store={store}>
@@ -105,6 +107,17 @@ const App: () => ReactNode = () => {
               component={TeamScreen}
               options={{
                 title: 'Team',
+                headerStyle: {
+                  backgroundColor: '#212121',
+                },
+                headerTintColor: '#ffffff',
+              }}
+            />
+            <Stack.Screen
+              name="Articles"
+              component={ArticlesScreen}
+              options={{
+                title: 'Articles',
                 headerStyle: {
                   backgroundColor: '#212121',
                 },

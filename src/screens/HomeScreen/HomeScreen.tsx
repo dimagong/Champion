@@ -58,7 +58,8 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
     // data.then(data => dispatch(setStatistics([...data])));
   }, []);
 
-  const redirectStatsPage = () => navigation.navigate('Stats');
+  const redirectStatsPage = (screen = 'Stats', params = {}) =>
+    navigation.navigate(screen, params);
   const nextMatch = useSelector(selectNextMatch);
   console.log('teams', nextMatch);
   return (
@@ -68,7 +69,16 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
         <HeaderComponent nextMatch={nextMatch} />
         <View style={styles.container__view}>
           <CardComponent
-            onClick={redirectStatsPage}
+            onClick={() =>
+              redirectStatsPage('Articles', {
+                article: {
+                  title: 'Hello',
+                  subtitle: 'Hello here',
+                  content: 'Some content',
+                  img: '',
+                },
+              })
+            }
             contentTitle="The best players of the previous game"
             content="Junior players received the best marks"
           />
