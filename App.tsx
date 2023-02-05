@@ -21,6 +21,7 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -29,7 +30,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 interface Navigation {
-  navigate(destination: string): void;
+  navigate(destination: string, params?: any): void;
 }
 
 const Stack = createNativeStackNavigator();

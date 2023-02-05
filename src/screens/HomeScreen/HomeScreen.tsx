@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
+
 import {
   changeResultMatch,
   //setNextMatch,
@@ -22,6 +23,7 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -34,7 +36,7 @@ import {
   Portal,
 } from 'react-native-paper';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -43,9 +45,52 @@ import {HeaderComponent} from 'ui/components/HeaderComponent';
 
 import type {RootState} from '../../store/store';
 
+interface Navigation {
+  navigate(destination: string, params?: any): void;
+}
+
+export type ArticleType = {
+  title: string;
+  subtitle?: string;
+  content: string;
+  img?: any;
+};
+
 const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
 
+const mockDataArticles = [
+  {
+    title: 'The best players of the previous game',
+    content: 'Junior players received the best marks',
+    img: 'ui/images/reward.jpg',
+  },
+  {
+    title: 'New coach from Liverpool',
+    content: 'The team will get a new legendary coach',
+    img: 'ui/images/reward.jpg',
+  },
+  {
+    title: 'Fans say, goodbye goalie',
+    content: 'He had 20 shutouts',
+    img: 'ui/images/reward.jpg',
+  },
+];
+
+const renderListArticles = ({item}: any) => {
+  const {title: contentTitle, content, img: source} = item;
+  const navigation = useNavigation<any>();
+  return (
+    <CardComponent
+      onClick={() => navigation.navigate('Articles', {...item})}
+      contentTitle={contentTitle}
+      content={content}
+      source={source}
+    />
+  );
+};
+
 export const HomeScreen = ({navigation}: {navigation: any}) => {
+  //const navigation = useNavigation();
   const count = useSelector((state: RootState) => state?.resultMatch?.value);
   const state = useSelector((state: RootState) => state);
   console.log('state', state);
@@ -67,7 +112,8 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <ScrollView>
         <HeaderComponent nextMatch={nextMatch} />
-        <View style={styles.container__view}>
+        <FlatList data={mockDataArticles} renderItem={renderListArticles} />
+        {/* <View style={styles.container__view}>
           <CardComponent
             onClick={() =>
               redirectStatsPage('Articles', {
@@ -94,7 +140,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
             contentTitle="The best players of the previous game"
             content="Junior players received the best marks"
           />
-        </View>
+        </View> */}
 
         {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text>Home Screen</Text>
