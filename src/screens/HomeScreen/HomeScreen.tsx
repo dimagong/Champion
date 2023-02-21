@@ -76,9 +76,10 @@ const mockDataArticles = [
   },
 ];
 
-const renderListArticles = ({item}: any) => {
+const renderListArticles = ({item, navigation}: any) => {
+  console.log('item', item);
   const {title: contentTitle, content, img: source} = item;
-  const navigation = useNavigation<any>();
+
   return (
     <CardComponent
       onClick={() => navigation.navigate('Articles', {...item})}
@@ -88,6 +89,9 @@ const renderListArticles = ({item}: any) => {
     />
   );
 };
+
+//TODO pass data for display articles on the Atricles screen
+// TODO remove any type
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
   //const navigation = useNavigation();
@@ -110,10 +114,14 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
-      <ScrollView>
-        <HeaderComponent nextMatch={nextMatch} />
-        <FlatList data={mockDataArticles} renderItem={renderListArticles} />
-        {/* <View style={styles.container__view}>
+      {/* <ScrollView> */}
+      <HeaderComponent nextMatch={nextMatch} />
+      <FlatList
+        style={styles.container__view}
+        data={mockDataArticles}
+        renderItem={({item}) => renderListArticles({item, navigation})}
+      />
+      {/* <View style={styles.container__view}> 
           <CardComponent
             onClick={() =>
               redirectStatsPage('Articles', {
@@ -142,7 +150,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
           />
         </View> */}
 
-        {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text>Home Screen</Text>
           <Button
             title="Go to Stats"
@@ -150,7 +158,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
             // onPress={() => navigation.setOptions({title: 'Updated!'})}
           />
         </View> */}
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
