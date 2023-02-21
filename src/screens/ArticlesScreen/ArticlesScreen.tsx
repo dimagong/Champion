@@ -27,7 +27,8 @@ export const ArticlesScreen = ({
   route: any;
   navigation: any;
 }) => {
-  const {title, subtitle, content, img} = route.params.article;
+  console.log('route.params', route.params);
+  const {title, content, img} = route.params;
   console.log('title', title);
   //   const redirectStatsPage = (screen = 'Stats', params = {}) =>
   //     navigation.navigate(screen, params);
