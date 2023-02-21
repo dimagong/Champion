@@ -30,11 +30,15 @@ export const CardComponent: React.FC<CardComponentType> = props => {
   const {
     title,
     subtitle,
-    source = 'ui/images/reward.jpg',
+    source = './../images/reward.jpg',
     contentTitle,
     content,
     onClick,
   } = props;
+
+  const imgSource = source
+    ? require('./../images/reward.jpg')
+    : require('./../images/reward.jpg');
   return (
     <Card onPress={onClick}>
       {title || subtitle ? (
@@ -47,7 +51,7 @@ export const CardComponent: React.FC<CardComponentType> = props => {
 
       <Card.Cover
         //source={{uri: 'https://picsum.photos/700'}}
-        source={require(source)}
+        source={imgSource}
       />
       <Card.Content>
         <Title>{contentTitle ?? 'contentTitle'}</Title>
