@@ -19,7 +19,7 @@ interface Navigation {
 type CardComponentType = {
   title?: string;
   subtitle?: string;
-  source?: string;
+  imgSource?: any;
   contentTitle?: string;
   content?: string;
   onClick?: () => any;
@@ -27,18 +27,8 @@ type CardComponentType = {
 };
 
 export const CardComponent: React.FC<CardComponentType> = props => {
-  const {
-    title,
-    subtitle,
-    source = './../images/reward.jpg',
-    contentTitle,
-    content,
-    onClick,
-  } = props;
+  const {title, subtitle, imgSource, contentTitle, content, onClick} = props;
 
-  const imgSource = source
-    ? require('./../images/reward.jpg')
-    : require('./../images/reward.jpg');
   return (
     <Card onPress={onClick}>
       {title || subtitle ? (

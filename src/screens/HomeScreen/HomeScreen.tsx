@@ -53,7 +53,7 @@ export type ArticleType = {
   title: string;
   subtitle?: string;
   content: string;
-  img?: any;
+  imgSource?: any;
 };
 
 const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
@@ -62,30 +62,30 @@ const mockDataArticles = [
   {
     title: 'The best players of the previous game',
     content: 'Junior players received the best marks',
-    img: 'ui/images/reward.jpg',
+    imgSource: require('./../../ui/images/reward.jpg'),
   },
   {
     title: 'New coach from Liverpool',
     content: 'The team will get a new legendary coach',
-    img: 'ui/images/reward.jpg',
+    imgSource: require('./../../ui/images/reward.jpg'),
   },
   {
     title: 'Fans say, goodbye goalie',
     content: 'He had 20 shutouts',
-    img: 'ui/images/reward.jpg',
+    imgSource: require('./../../ui/images/reward.jpg'),
   },
 ];
 
 const renderListArticles = ({item, navigation}: any) => {
   console.log('item', item);
-  const {title: contentTitle, content, img: source} = item;
+  const {title: contentTitle, content, imgSource: imgSource} = item;
 
   return (
     <CardComponent
       onClick={() => navigation.navigate('Articles', {...item})}
       contentTitle={contentTitle}
       content={content}
-      source={source}
+      imgSource={imgSource}
     />
   );
 };
