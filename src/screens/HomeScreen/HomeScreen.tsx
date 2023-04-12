@@ -97,7 +97,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
   //const navigation = useNavigation();
   const count = useSelector((state: RootState) => state?.resultMatch?.value);
   const state = useSelector((state: RootState) => state);
-  console.log('state', state);
+  //console.log('state', state);
   const dispatch = useDispatch<any>();
 
   React.useEffect(() => {
