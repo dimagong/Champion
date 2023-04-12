@@ -2,20 +2,82 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HeaderLeftIcon, HeaderRightIcon, LogoTitle} from 'ui/components';
 import {Navigation} from 'src/interfaces';
-import {HomeScreen} from '../HomeScreen';
+import {HomeScreen, HomeStackScreen} from '../HomeScreen';
 import {StatsScreen} from '../StatsScreen';
 import {ArticlesScreen} from '../ArticlesScreen';
 import {TeamScreen} from '../TeamScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {ShopScreen} from '../ShopScreen';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
+function MyTabBar({state, descriptors, navigation}: any) {
+  console.log('state bar', state);
+  return (
+    <View style={{flexDirection: 'row'}}>
+      {state.routes.map((route: any, index: any) => {
+        const {options} = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        return (
+          <TouchableOpacity
+            key={index}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? {selected: true} : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={{flex: 1}}>
+            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
 export const RootScreen = () => {
   return (
     <>
-      <Stack.Navigator
+      <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Shop" component={ShopScreen} />
+      </Tab.Navigator>
+    </>
+  );
+};
+
+{
+  /* <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
           headerTitle: props => <LogoTitle />,
@@ -66,10 +128,5 @@ export const RootScreen = () => {
           }}
         />
       </Stack.Navigator>
-      {/* <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={HomeScreen} />
-      </Tab.Navigator> */}
-    </>
-  );
-};
+     */
+}
