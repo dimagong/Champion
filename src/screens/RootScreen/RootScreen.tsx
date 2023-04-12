@@ -68,8 +68,10 @@ function MyTabBar({state, descriptors, navigation}: any) {
 export const RootScreen = () => {
   return (
     <>
-      <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Navigator
+        screenOptions={{headerShown: false}}
+        tabBar={props => <MyTabBar {...props} />}>
+        <Tab.Screen name="home" component={HomeStackScreen} />
         <Tab.Screen name="Shop" component={ShopScreen} />
       </Tab.Navigator>
     </>
