@@ -21,102 +21,27 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
-type IProps = {
-  children: JSX.Element;
-  title: string;
-};
-
-const Section = ({children, title}: IProps): JSX.Element => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import {Navigation} from 'src/interfaces';
 
 const Stack = createNativeStackNavigator();
 
-export const TeamScreen = ({navigation}: {navigation: any}) => {
-  const isDarkMode = useColorScheme() === 'dark';
+interface TeamScreenProps {
+  navigation: Navigation;
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+export const TeamScreen = ({navigation}: TeamScreenProps) => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        {/* <Header
-          style={{backgroundColor: 'red', borderColor: 'red', heigth: 20}}
-        /> */}
-        {/* <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            <>
-              Edit <Text style={styles.highlight}>App.js</Text> to change this
-              screen and then come back to see your edits.
-            </>
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            <>Read the docs to discover what to do next:</>
-          </Section>
-          <LearnMoreLinks />
-        </View> */}
-      </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="#040507" />
+      <Text style={{fontSize: 40, color: 'white'}}>Team screen</Text>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  footbalFieldImages: {
-    width: '100%',
-    height: 250,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    backgroundColor: '#040507',
+    alignItems: 'center',
   },
 });

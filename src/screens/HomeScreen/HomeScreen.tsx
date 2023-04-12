@@ -14,27 +14,9 @@ import {receiveStatistics} from './../../data/api/services';
 import {fetchStatistics} from '../../store/thunks/fetchStatistics';
 import {fetchNextMatches} from '../../store/thunks/fetchNextMatches';
 
-import {
-  Button,
-  View,
-  Text,
-  StatusBar,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Image,
-  FlatList,
-} from 'react-native';
+import {StatusBar, SafeAreaView, StyleSheet, FlatList} from 'react-native';
 
-import {
-  Avatar,
-  Button as ButtonPaper,
-  Card,
-  Title,
-  Paragraph,
-  FAB,
-  Portal,
-} from 'react-native-paper';
+import {Avatar, Button as ButtonPaper} from 'react-native-paper';
 
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -44,10 +26,6 @@ import {CardComponent} from 'ui/components/CardComponent';
 import {HeaderComponent} from 'ui/components/HeaderComponent';
 
 import type {RootState} from '../../store/store';
-
-interface Navigation {
-  navigate(destination: string, params?: any): void;
-}
 
 export type ArticleType = {
   title: string;
@@ -121,44 +99,6 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
         data={mockDataArticles}
         renderItem={({item}) => renderListArticles({item, navigation})}
       />
-      {/* <View style={styles.container__view}> 
-          <CardComponent
-            onClick={() =>
-              redirectStatsPage('Articles', {
-                article: {
-                  title: 'Hello',
-                  subtitle: 'Hello here',
-                  content: 'Some content',
-                  img: '',
-                },
-              })
-            }
-            contentTitle="The best players of the previous game"
-            content="Junior players received the best marks"
-          />
-        </View>
-        <View style={styles.container__view}>
-          <CardComponent
-            contentTitle="The best players of the previous game"
-            content="Junior players received the best marks"
-          />
-        </View>
-        <View style={styles.container__view}>
-          <CardComponent
-            contentTitle="The best players of the previous game"
-            content="Junior players received the best marks"
-          />
-        </View> */}
-
-      {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text>Home Screen</Text>
-          <Button
-            title="Go to Stats"
-            onPress={() => navigation.navigate('Stats')}
-            // onPress={() => navigation.setOptions({title: 'Updated!'})}
-          />
-        </View> */}
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
