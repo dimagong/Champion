@@ -1,23 +1,40 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HeaderLeftIcon, HeaderRightIcon, LogoTitle} from 'ui/components';
-import {Navigation} from 'src/interfaces';
-import {HomeScreen, HomeStackScreen} from '../HomeScreen';
-import {StatsScreen} from '../StatsScreen';
-import {ArticlesScreen} from '../ArticlesScreen';
-import {TeamScreen} from '../TeamScreen';
+import {HomeStackScreen} from '../HomeScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import {ShopScreen} from '../ShopScreen';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-function MyTabBar({state, descriptors, navigation}: any) {
+const setIcon = (label: string) => {
+  let iconName;
+
+  switch (label) {
+    case 'home':
+      iconName = 'home';
+      break;
+    case 'shop':
+      iconName = 'shopping-bag';
+      break;
+    case 'user':
+      iconName = 'person';
+      break;
+    default:
+      iconName = 'home';
+      break;
+  }
+
+  return iconName;
+};
+
+function TabBar({state, descriptors, navigation}: any) {
   console.log('state bar', state);
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={styles.tabContainer}>
       {state.routes.map((route: any, index: any) => {
         const {options} = descriptors[route.key];
         const label =
@@ -47,6 +64,8 @@ function MyTabBar({state, descriptors, navigation}: any) {
           });
         };
 
+        const iconName = setIcon(label);
+
         return (
           <TouchableOpacity
             key={index}
@@ -55,9 +74,12 @@ function MyTabBar({state, descriptors, navigation}: any) {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
-            style={{flex: 1}}>
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+            onLongPress={onLongPress}>
+            <Icons
+              name={iconName}
+              size={25}
+              style={{color: isFocused ? '#fafafa' : '#757575'}}
+            />
           </TouchableOpacity>
         );
       })}
@@ -70,13 +92,26 @@ export const RootScreen = () => {
     <>
       <Tab.Navigator
         screenOptions={{headerShown: false}}
-        tabBar={props => <MyTabBar {...props} />}>
+        tabBar={props => <TabBar {...props} />}>
         <Tab.Screen name="home" component={HomeStackScreen} />
-        <Tab.Screen name="Shop" component={ShopScreen} />
+        <Tab.Screen name="shop" component={ShopScreen} />
+        <Tab.Screen name="user" component={ShopScreen} />
       </Tab.Navigator>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  tabContainer: {
+    paddingTop: 15,
+    paddingBottom: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: '#000000',
+  },
+});
 
 {
   /* <Stack.Navigator
