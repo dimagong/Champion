@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {ShopScreen} from '../ShopScreen';
 import {TabBar} from 'ui/components';
+import {UserScreen} from '../UserScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +16,7 @@ export const RootScreen = () => {
         tabBar={props => <TabBar {...props} />}>
         <Tab.Screen name="home" component={HomeStackScreen} />
         <Tab.Screen name="shop" component={ShopScreen} />
-        <Tab.Screen name="user" component={ShopScreen} />
+        <Tab.Screen name="user" component={UserScreen} />
       </Tab.Navigator>
     </>
   );
