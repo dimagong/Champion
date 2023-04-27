@@ -40,17 +40,17 @@ const mockDataArticles = [
   {
     title: 'The best players of the previous game',
     content: 'Junior players received the best marks',
-    imgSource: require('./../../ui/images/reward.jpg'),
+    imgSource: require('./../../ui/images/reward.webp'),
   },
   {
     title: 'New coach from Liverpool',
     content: 'The team will get a new legendary coach',
-    imgSource: require('./../../ui/images/reward.jpg'),
+    imgSource: require('./../../ui/images/reward.webp'),
   },
   {
     title: 'Fans say, goodbye goalie',
     content: 'He had 20 shutouts',
-    imgSource: require('./../../ui/images/reward.jpg'),
+    imgSource: require('./../../ui/images/reward.webp'),
   },
 ];
 

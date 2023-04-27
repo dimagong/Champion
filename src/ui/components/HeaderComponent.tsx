@@ -12,7 +12,7 @@ export const HeaderComponent: React.FC<HeaderComponentType> = ({nextMatch}) => {
     <View style={styles.header}>
       <Image
         style={styles.header__img}
-        source={require('ui/images/artificial-grass-on-football-pitch.jpeg')}
+        source={require('./../images/football-field.webp')}
       />
       <View style={styles.header__content}>
         <View style={styles.timer}>
