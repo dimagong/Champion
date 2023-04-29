@@ -16,12 +16,21 @@ const Stack = createNativeStackNavigator();
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-const theme = {
+export const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#22409A',
+    primary: '#212121',
+    primaryRed: '#d50000',
+    primaryDark: '#171717',
+    primaryLight: '#4d4d4d',
+    secondary: `#f50057`,
+    secondaryDark: '#ab003c',
+    secondaryLight: '#f73378',
+    alarm: '#ff1744',
+    white: '#f5f5f5',
+    gray: '#bdbdbd',
     accent: '#f1c40f',
     containerBack: '#ddd',
   },
