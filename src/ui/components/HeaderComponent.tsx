@@ -1,28 +1,83 @@
 import * as React from 'react';
+import {useTheme} from 'react-native-paper';
+import {theme} from './../../../App';
 
-import {Button, View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type HeaderComponentType = {
   nextMatch?: any;
 };
 
 export const HeaderComponent: React.FC<HeaderComponentType> = ({nextMatch}) => {
-  const {meetingTime, teamHome, teamGuest} = nextMatch;
+  const {teamHome, teamGuest, time} = nextMatch;
+  const {deviceHeight, colors} = useTheme<typeof theme>();
+  const currentHeight = deviceHeight / 2;
+
   return (
-    <View style={styles.header}>
+    <View
+      style={[
+        styles.header,
+        {height: currentHeight, backgroundColor: colors.primary},
+      ]}>
       <Image
         style={styles.header__img}
         source={require('./../images/football-field.webp')}
       />
       <View style={styles.header__content}>
-        <View style={styles.timer}>
-          <Text style={styles.timer__title}>SOON:</Text>
-          <Text style={styles.timer__time}>{meetingTime}</Text>
+        <View style={styles.circle__container}>
+          <View style={styles.circle__wrapper__top}>
+            <View
+              style={[
+                styles.half__circle__top,
+                {backgroundColor: colors.primaryDark},
+              ]}>
+              <Icon name="timer" size={30} color="#fafafa" />
+            </View>
+          </View>
+          <View style={styles.circle__wrapper__bottom}>
+            <View
+              style={[
+                styles.half__circle__bottom,
+                {backgroundColor: colors.primaryLight},
+              ]}>
+              <Text style={styles.timer__time}>
+                {time.split(',')[1]?.trim() ?? ''}
+              </Text>
+            </View>
+          </View>
         </View>
-        <View style={styles.competition}>
-          <Text style={styles.competition__title}>{teamHome}</Text>
-          <Text style={styles.competition__vs}>VS</Text>
-          <Text style={styles.competition__title}>{teamGuest}</Text>
+
+        <View style={styles.competition__container}>
+          <Text style={[styles.competition__title, {color: colors.white}]}>
+            {teamHome}
+          </Text>
+          <View style={styles.competition__resist}>
+            <IconCommunity
+              name="resistor"
+              size={35}
+              color={colors.primaryRed}
+            />
+            <View>
+              <Text style={[styles.competition__vs, {color: colors.white}]}>
+                VS
+              </Text>
+              <Text style={[styles.competition__time, {color: colors.white}]}>
+                {time.split(',')[0]?.trim() ?? ''}
+              </Text>
+            </View>
+
+            <IconCommunity
+              name="resistor"
+              size={35}
+              color={colors.primaryRed}
+            />
+          </View>
+
+          <Text style={[styles.competition__title, {color: colors.white}]}>
+            {teamGuest}
+          </Text>
         </View>
       </View>
     </View>
@@ -42,27 +97,19 @@ const styles = StyleSheet.create({
     height: 150,
   },
   header: {
-    backgroundColor: '#000000',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
     width: '100%',
-    height: 300,
+    height: 350,
   },
   header__content: {
-    // borderColor: 'red',
-    // borderWidth: 2,
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
   },
-  timer: {
+  circle__container: {
     position: 'absolute',
     marginTop: 0,
-    transform: [{translateY: -30}],
-    width: 70,
-    height: 70,
-    borderRadius: 70 / 2,
-    backgroundColor: '#212121',
+    transform: [{translateY: -45}],
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
@@ -72,33 +119,72 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
   },
-  timer__time: {
-    color: 'red',
-    fontSize: 14,
-    fontWeight: '900',
-    textAlign: 'center',
-  },
-
-  competition: {
+  competition__container: {
     marginTop: 'auto',
     marginBottom: 'auto',
     paddingTop: 20,
-    // borderColor: 'red',
-    // borderWidth: 2,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
   competition__title: {
-    color: 'white',
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: `500`,
     textAlign: 'center',
   },
   competition__vs: {
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
+    fontWeight: `700`,
     textAlign: 'center',
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  competition__time: {
+    fontSize: 12,
+  },
+  circle__wrapper__top: {
+    width: 90, // half of the image width
+    height: 45,
+    backgroundColor: 'transparent',
+    overflow: 'hidden',
+  },
+  half__circle__top: {
+    width: 90,
+    height: 90,
+    borderRadius: 45, // half of the image width
+    paddingTop: 10,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  circle__wrapper__bottom: {
+    width: 90, // half of the image width
+    height: 45,
+    backgroundColor: 'transparent',
+    overflow: 'hidden',
+  },
+  half__circle__bottom: {
+    width: 90,
+    height: 90,
+    borderRadius: 45, // half of the image width
+    position: 'absolute',
+    bottom: 0,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingTop: 48,
+  },
+  timer__time: {
+    color: '#fafafa',
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  competition__resist: {
+    paddingBottom: 3,
+    paddingTop: 3,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });
