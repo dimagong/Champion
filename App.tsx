@@ -33,6 +33,8 @@ export const theme = {
     gray: '#bdbdbd',
     accent: '#f1c40f',
     containerBack: '#ddd',
+    win: '#00e676',
+    draw: '#ffc400',
   },
   deviceWidth: deviceWidth,
   deviceHeight: deviceHeight,
