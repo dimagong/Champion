@@ -17,9 +17,10 @@ const Slide = ({data}: ISlideProps) => {
   const {deviceHeight, deviceWidth, colors} = useTheme<typeof theme>();
 
   console.log('Slide data ', data);
-  const teamHome = data.homeaway === 'home' ? `TJ Máj Černová` : data.team.name;
+  const teamHome =
+    data.homeaway === 'home' ? `Liptovská Štiavnica` : data.team.name;
   const teamGuest =
-    data.homeaway === 'home' ? data.team.name : `TJ Máj Černová`;
+    data.homeaway === 'home' ? data.team.name : `Liptovská Štiavnica`;
 
   const iconAvatar: string =
     data.result === 'W'
