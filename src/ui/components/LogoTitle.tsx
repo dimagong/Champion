@@ -5,7 +5,7 @@ export const LogoTitle = () => {
   return (
     <Image
       style={{width: 30, height: 30}}
-      source={require('../images/chernova.webp')}
+      source={require('../images/stiavnica.webp')}
     />
   );
 };
