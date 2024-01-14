@@ -6,19 +6,34 @@ const TEAM_ID = '57224'
 const COMPETITION_ID = '647c3f337b634444d1521c15'
 const PART_ID = '647c3fb176d0d348cd096270'
 const PARENT_RELATION = 'SsFZ'
+const DATA_TO = '2024-01-14T14%3A46%3A00.000Z'
+const OFFSET = '0'
 
-export const client = axios.create({
+export const clientSportNet = axios.create({
   baseURL: 'https://sutaze.api.sportnet.online/api/v1',
     headers: {
         "Content-type": "application/json"
       }
 })
 
+export const clientArticlesFirebase = axios.create({
+  baseURL: "http://172.28.112.1:5050",
+  withCredentials: false,
+  headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+  }
+})
+
 //https://sutaze.api.sportnet.online/api/v1/matches?playerAppSpace=tj-druzstevnik-liptovska-stiavnica.futbalnet.sk&dateTo=2023-08-28T14%3A25%3A00.000Z&withDate=true&closed=true&teamId=57224&offset=0&limit=8
+//https://sutaze.api.sportnet.online/api/v1/matches?playerAppSpace=tj-druzstevnik-liptovska-stiavnica.futbalnet.sk&dateTo=2024-01-14T14%3A46%3A00.000Z&withDate=true&closed=true&teamId=57224&offset=8&limit=8
+//https://sutaze.api.sportnet.online/api/v1/matches?playerAppSpace=tj-druzstevnik-liptovska-stiavnica.futbalnet.sk&dateTo=2024-01-14T14%3A46%3A00.000Z&withDate=true&closed=true&teamId=57224&offset=0
 export const receiveStatistics = async () => {
   try {
-    const { data } = await client.get(`public/${PARENT_RELATION}/competitions/${COMPETITION_ID}/parts/${PART_ID}`)
-        const { results} = data.resultsTable
+    const { data } = await clientSportNet.get(`public/${PARENT_RELATION}/competitions/${COMPETITION_ID}/parts/${PART_ID}`)
+    //const { data } = await clientSportNet.get(`matches?playerAppSpace=${TEAM_NAME}.futbalnet.sk&dateTo=${DATA_TO}&withDate=true&closed=true&teamId=${TEAM_ID}&offset=${OFFSET}`)    
+    const { results } = data.resultsTable
+    console.log('Matches===', results)
         return results
     
   } catch (error) {
@@ -29,12 +44,25 @@ export const receiveStatistics = async () => {
 
 export const receiveNextMatches = async () => {
   try {
-    const { data } = await client.get(`/matches?playerAppSpace=${TEAM_NAME}.futbalnet.sk&competitionId=${COMPETITION_ID}&withDate=true&closed=false&teamId=${TEAM_ID}&offset=0&limit=8`)
-        const { matches} = data
+    const { data } = await clientSportNet.get(`/matches?playerAppSpace=${TEAM_NAME}.futbalnet.sk&competitionId=${COMPETITION_ID}&withDate=true&closed=false&teamId=${TEAM_ID}&offset=0&limit=8`)
+    const { matches } = data
+    
         return matches
     
   } catch (error) {
     console.log('Error service receiveNextMatches', error)
+    return Promise.reject(error)
+  }
+}
+
+export const receiveArticles = async () => {
+  try {
+    const { data } = await clientArticlesFirebase.get(`/articles`)
+    console.log('data receiveArticles======', data)
+    return data
+    
+  } catch (error) {
+    console.log('Error service receiveArticles======', error)
     return Promise.reject(error)
   }
 }

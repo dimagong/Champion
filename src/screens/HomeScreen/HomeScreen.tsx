@@ -13,6 +13,7 @@ import {selectNextMatch} from '../../store/selectors/selectNextMatch';
 import {receiveStatistics} from './../../data/api/services';
 import {fetchStatistics} from '../../store/thunks/fetchStatistics';
 import {fetchNextMatches} from '../../store/thunks/fetchNextMatches';
+import {fetchArticles} from '../../store/thunks/fetchArticles';
 
 import {
   StatusBar,
@@ -51,32 +52,45 @@ const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
 const mockDataArticles = [
   {
     title: 'The best players of the previous game',
-    content: 'Junior players received the best marks',
+    subTitle: 'Junior players received the best marks',
+    content:
+      'Junior players received the best marks. Junior players received the best marks. Junior players received the best marks.Junior players received the best marks.Junior players received the best marks.',
     imgSource: require('./../../ui/images/reward.webp'),
   },
   {
     title: 'New coach from Liverpool',
-    content: 'The team will get a new legendary coach',
+    subTitle: 'The team will get a new legendary coach',
+    content:
+      'The team will get a new legendary coach. The team will get a new legendary coach. The team will get a new legendary coach. The team will get a new legendary coach.The team will get a new legendary coach.',
     imgSource: require('./../../ui/images/reward.webp'),
   },
   {
     title: 'Fans say, goodbye goalie',
-    content: 'He had 20 shutouts',
+    subTitle: 'He had 20 shutouts',
+    content:
+      'He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts.',
     imgSource: require('./../../ui/images/reward.webp'),
   },
 ];
 
-const renderListArticles = ({item, key, navigation}: any) => {
+const Articles = ({item, key, navigation}: any) => {
   console.log('item', item);
-  const {title: contentTitle, content, imgSource: imgSource} = item;
-
+  const {
+    title: contentTitle,
+    subTitle: contentSubtitle,
+    content,
+    imgSource: imgSource,
+  } = item;
+  const onClickArticles = () => navigation.navigate('Articles', {...item});
   return (
     <CardComponent
       key={key}
-      onClick={() => navigation.navigate('Articles', {...item})}
+      onClick={onClickArticles}
       contentTitle={contentTitle}
-      content={content}
+      contentSubtitle={contentSubtitle}
+      // content={content}
       imgSource={imgSource}
+      title="title"
     />
   );
 };
@@ -93,10 +107,12 @@ export const HomeScreen = () => {
   const lastMatches: IMatch[] = useSelector(selectFinishedMatches);
   console.log('state', state);
   const dispatch = useDispatch<any>();
+  console.log('count============', count);
 
   React.useEffect(() => {
     dispatch(fetchStatistics());
     dispatch(fetchNextMatches());
+    dispatch(fetchArticles());
     // const data = receiveStatistics();
     // data.then(data => dispatch(setStatistics([...data])));
   }, []);
@@ -110,14 +126,17 @@ export const HomeScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <ScrollView>
         <HeaderComponent nextMatch={nextMatch} />
-        <View style={[styles.container__carousel]}>
+        <View style={styles.container__carousel}>
           <Carousel lastMatches={lastMatches} />
         </View>
         <View style={styles.container__view}>
-          {mockDataArticles.map((item, idx) => {
-            let key = idx;
-            return renderListArticles({item, key, navigation});
-          })}
+          {mockDataArticles.map(item => (
+            <Articles
+              item={item}
+              key={JSON.stringify(item)}
+              navigation={navigation}
+            />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -129,13 +148,14 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   container__carousel: {
-    marginTop: 25,
-    height: 250,
+    height: 'auto',
+    paddingBottom: 25,
+    paddingTop: 25,
   },
   container__view: {
-    height: '100%',
+    borderWidth: 1,
+    borderColor: 'transparent',
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 25,
   },
 });

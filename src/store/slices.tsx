@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {fetchStatistics} from './thunks/fetchStatistics';
 import {fetchNextMatches} from './thunks/fetchNextMatches';
+import {fetchArticles} from './thunks/fetchArticles';
 
 //import type {RootState} from '../store/store';
 
@@ -119,6 +120,55 @@ export const statisticsSlice = createSlice({
   },
 });
 
+export const articlesSlice = createSlice({
+  name: 'articles',
+  initialState: {
+    value: [],
+  },
+  reducers: {
+    // setStatistics: (state, action) => {
+    //   state.value = action.payload;
+    // },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchArticles.pending, (state, action) => {
+        console.log('articles.pending');
+        // if (state.loading === 'idle') {
+        //   state.loading = 'pending'
+        //   state.currentRequestId = action.meta.requestId
+        // }
+      })
+      .addCase(fetchArticles.fulfilled, (state, action) => {
+        console.log('fetchArticles.fulfilled');
+        const {payload} = action;
+        state.value = payload;
+        //
+        //;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.entities.push(action.payload)
+        //   state.currentRequestId = undefined
+        // }
+      })
+      .addCase(fetchArticles.rejected, (state, action) => {
+        console.log('fetchArticles.rejected');
+        const {requestId} = action.meta;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.error = action.error
+        //   state.currentRequestId = undefined
+        // }
+      });
+  },
+});
+
 // Action creators are generated for each case reducer function
 export const {changeResultMatch} = resultMatchSlice.actions;
 //export const {setNextMatch} = nextMatchSlice.actions;
@@ -127,3 +177,4 @@ export const {changeResultMatch} = resultMatchSlice.actions;
 export const resultMatchReducer = resultMatchSlice.reducer;
 export const nextMatchesReducer = nextMatchesSlice.reducer;
 export const statisticsReducer = statisticsSlice.reducer;
+export const articlesReducer = articlesSlice.reducer;
