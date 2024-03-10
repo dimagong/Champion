@@ -19,3 +19,11 @@ export interface IMatch {
     _id: string;
   };
 }
+
+
+export interface IArticle {
+  title: string;
+  subTitle?: string;
+  content: string;
+  url?: any;
+};
