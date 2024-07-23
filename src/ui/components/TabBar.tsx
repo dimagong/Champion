@@ -1,17 +1,20 @@
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import {Routes} from './../../interfaces/interfaces';
 
-const setIcon = (label: string) => {
+type RotesTypes = `${Routes}`;
+
+const setIcon = (label: RotesTypes) => {
   let iconName;
 
   switch (label) {
-    case 'home':
+    case Routes.Home:
       iconName = 'home';
       break;
-    case 'shop':
+    case Routes.Shop:
       iconName = 'shopping-bag';
       break;
-    case 'user':
+    case Routes.User:
       iconName = 'person';
       break;
     default:
@@ -24,6 +27,7 @@ const setIcon = (label: string) => {
 
 export const TabBar = ({state, descriptors, navigation}: any) => {
   console.log('state bar', state);
+  console.log('descriptorsr', descriptors);
   return (
     <View style={styles.tabContainer}>
       {state.routes.map((route: any, index: any) => {
@@ -37,7 +41,7 @@ export const TabBar = ({state, descriptors, navigation}: any) => {
 
         const isFocused = state.index === index;
 
-        const onPress = () => {
+        const onPressNavigation = () => {
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -64,7 +68,7 @@ export const TabBar = ({state, descriptors, navigation}: any) => {
             accessibilityState={isFocused ? {selected: true} : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
-            onPress={onPress}
+            onPress={onPressNavigation}
             onLongPress={onLongPress}>
             <Icons
               name={iconName}

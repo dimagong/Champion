@@ -20,10 +20,27 @@ export interface IMatch {
   };
 }
 
+export interface IArticleEntity{
+  answer: string,
+  question: string
+}
+
+export interface IArticleContent{
+  id: string;
+  data: IArticleEntity[]
+}
 
 export interface IArticle {
   title: string;
   subTitle?: string;
-  content: string;
   url?: any;
+  id: string;
+  content: IArticleContent
+
 };
+
+export enum Routes {
+  Home= "home",
+  Shop="shop",
+  User="user"
+}

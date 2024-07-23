@@ -5,7 +5,6 @@ export const fetchArticles = createAsyncThunk(
   'articles/fetchArticles',
   async (thunkAPI) => {
     const data = await receiveArticles()
-    console.log('receiveArticles data =======', data)
     return data
   }
 )

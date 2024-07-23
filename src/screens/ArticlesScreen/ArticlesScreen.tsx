@@ -1,24 +1,14 @@
 import * as React from 'react';
 
-import {useSelector} from 'react-redux';
-
-import {selectNextMatch} from '../../store/selectors/selectNextMatch';
-
 import {
-  Button,
   View,
-  Text,
   StatusBar,
   SafeAreaView,
   StyleSheet,
   ScrollView,
-  Image,
 } from 'react-native';
 
 import {CardComponent} from 'ui/components/CardComponent';
-import {HeaderComponent} from 'ui/components/HeaderComponent';
-
-import type {RootState} from '../../store/store';
 
 export const ArticlesScreen = ({
   route,
@@ -27,11 +17,7 @@ export const ArticlesScreen = ({
   route: any;
   navigation: any;
 }) => {
-  console.log('route.params', route.params);
-  const {title, content, img} = route.params;
-  console.log('title', title);
-  //   const redirectStatsPage = (screen = 'Stats', params = {}) =>
-  //     navigation.navigate(screen, params);
+  const {title, subTitle, content, url, id} = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,8 +25,11 @@ export const ArticlesScreen = ({
       <ScrollView>
         <View style={styles.container__view}>
           <CardComponent
-            contentTitle="The best players of the previous game"
-            content="Junior players received the best marks"
+            id={id}
+            url={url}
+            title={title}
+            content={content}
+            subTitle={subTitle}
           />
         </View>
       </ScrollView>

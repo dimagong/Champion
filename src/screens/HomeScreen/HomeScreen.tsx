@@ -29,7 +29,7 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {CardComponent} from 'ui/components/CardComponent';
+import {CardComponent, CardComponentTitle} from 'ui/components/CardComponent';
 import {HeaderComponent} from 'ui/components/HeaderComponent';
 
 import type {RootState} from '../../store/store';
@@ -38,59 +38,24 @@ import {Carousel} from 'ui/components';
 import {useTheme} from 'react-native-paper';
 import {theme} from './../../../App';
 import {selectFinishedMatches} from './../../store/selectors';
-import {IMatch} from 'src/interfaces';
-
-export type ArticleType = {
-  title: string;
-  subtitle?: string;
-  content: string;
-  imgSource?: any;
-};
+import {IArticle, IMatch} from 'src/interfaces';
+import {ActionCreatorWithPayload, AsyncThunkAction} from '@reduxjs/toolkit';
 
 const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />;
 
-const mockDataArticles = [
-  {
-    title: 'The best players of the previous game',
-    subTitle: 'Junior players received the best marks',
-    content:
-      'Junior players received the best marks. Junior players received the best marks. Junior players received the best marks.Junior players received the best marks.Junior players received the best marks.',
-    imgSource: require('./../../ui/images/reward.webp'),
-  },
-  {
-    title: 'New coach from Liverpool',
-    subTitle: 'The team will get a new legendary coach',
-    content:
-      'The team will get a new legendary coach. The team will get a new legendary coach. The team will get a new legendary coach. The team will get a new legendary coach.The team will get a new legendary coach.',
-    imgSource: require('./../../ui/images/reward.webp'),
-  },
-  {
-    title: 'Fans say, goodbye goalie',
-    subTitle: 'He had 20 shutouts',
-    content:
-      'He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts. He had 20 shutouts.',
-    imgSource: require('./../../ui/images/reward.webp'),
-  },
-];
+interface IArticlesProps extends IArticle {
+  // item: any;
+  //navigation: any;
+}
 
-const Articles = ({item, key, navigation}: any) => {
-  console.log('item', item);
-  const {
-    title: contentTitle,
-    subTitle: contentSubtitle,
-    content,
-    imgSource: imgSource,
-  } = item;
-  const onClickArticles = () => navigation.navigate('Articles', {...item});
+const Articles = (article: IArticlesProps) => {
+  const navigation = useNavigation<any>();
+  const onClickArticles = () => navigation.navigate('Articles', {...article});
   return (
-    <CardComponent
-      key={key}
+    <CardComponentTitle
       onClick={onClickArticles}
-      contentTitle={contentTitle}
-      contentSubtitle={contentSubtitle}
-      // content={content}
-      imgSource={imgSource}
-      title="title"
+      title={article.title}
+      subTitle={article.subTitle}
     />
   );
 };
@@ -105,9 +70,10 @@ export const HomeScreen = () => {
   const count = useSelector((state: RootState) => state?.resultMatch?.value);
   const state = useSelector((state: RootState) => state);
   const lastMatches: IMatch[] = useSelector(selectFinishedMatches);
-  console.log('state', state);
-  const dispatch = useDispatch<any>();
-  console.log('count============', count);
+  const articles: IArticle[] = useSelector(
+    (state: RootState) => state?.articles?.value,
+  );
+  const dispatch = useDispatch<ActionCreatorWithPayload<any> | any>();
 
   React.useEffect(() => {
     dispatch(fetchStatistics());
@@ -130,11 +96,11 @@ export const HomeScreen = () => {
           <Carousel lastMatches={lastMatches} />
         </View>
         <View style={styles.container__view}>
-          {mockDataArticles.map(item => (
+          {articles.map(item => (
             <Articles
-              item={item}
-              key={JSON.stringify(item)}
-              navigation={navigation}
+              {...item}
+              key={item.id}
+              // navigation={navigation}
             />
           ))}
         </View>
