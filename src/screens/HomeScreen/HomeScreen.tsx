@@ -77,7 +77,6 @@ export const HomeScreen = () => {
     const dispatch = useDispatch<ActionCreatorWithPayload<any> | any>();
 
     React.useEffect(() => {
-        dispatch(fetchStatistics());
         dispatch(fetchNextMatches());
         dispatch(fetchArticles());
         // const data = receiveStatistics();
